@@ -3,8 +3,9 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include <chrono>
 
-#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data50.txt"
+#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data100.txt"
 
 class RPQ {
 public:
@@ -64,7 +65,11 @@ void RPQ::PrintProcesses() {
     }
 }
 void RPQ::SortByR() {
+    auto t1 = std::chrono::high_resolution_clock::now();
     std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end());
+    auto t2 = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+    std::cout << "Czas Wykonania funkcji sort R: " << duration <<"ms"<<std::endl;
 }
 void RPQ::SortByPermutation() {}
 void RPQ::CMAX() {
