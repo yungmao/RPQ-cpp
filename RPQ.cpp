@@ -3,12 +3,13 @@
 #include <string>
 #include <fstream>
 
-#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
+#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data100.txt"
 
 class RPQ {
 public:
     RPQ() {
         loadFile();
+        CMAX();
     }
 private:
     std::vector<std::vector<int>> VectorOfProcesses;
@@ -20,7 +21,9 @@ private:
 public:
     void loadFile();
     void PrintProcesses();
-
+    void SortByR();
+    void SortByPermutation();
+    void CMAX();
 };
 
 int main() {
@@ -50,10 +53,41 @@ void RPQ::loadFile() {
     inputFile.close();
 }
 void RPQ::PrintProcesses() {
+    std::cout << "Wartosci Procesow: " << std::endl;
     for (auto i : VectorOfProcesses) {
         for (auto j : i) {
             std::cout << j << ' ';
         }
         std::cout << std::endl;
     }
+}
+void RPQ::SortByR() {}
+void RPQ::SortByPermutation() {}
+void RPQ::CMAX() {
+    int endtime = 0;
+    int cmax = 0;
+    int starttime = 0;
+    std::vector<int> foo;
+    foo = VectorOfProcesses[0];
+    starttime = foo[0] + foo[1];
+    for (int i = 1; i < numberOfProcess; i++) {
+        starttime = cmax;
+        foo = VectorOfProcesses[i];
+        if (foo[0] <= starttime) {
+            cmax = starttime + foo[1];
+            if (endtime < (cmax+foo[2])) {
+                endtime = cmax + foo[2];
+            }
+        }
+        else
+        {
+            starttime = starttime + (foo[0] - starttime);
+            cmax = starttime + foo[1];
+            if (endtime < (cmax + foo[2])) {
+                endtime = cmax + foo[2];
+            }
+        }
+    }
+
+    std::cout << "Wynik CMAX = " << endtime << std::endl;
 }
