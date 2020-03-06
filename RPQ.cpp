@@ -2,13 +2,15 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <algorithm>
 
-#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data100.txt"
+#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data50.txt"
 
 class RPQ {
 public:
     RPQ() {
         loadFile();
+        SortByR();
         CMAX();
     }
 private:
@@ -61,7 +63,9 @@ void RPQ::PrintProcesses() {
         std::cout << std::endl;
     }
 }
-void RPQ::SortByR() {}
+void RPQ::SortByR() {
+    std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end());
+}
 void RPQ::SortByPermutation() {}
 void RPQ::CMAX() {
     int endtime = 0;
