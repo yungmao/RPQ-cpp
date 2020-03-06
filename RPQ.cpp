@@ -5,13 +5,15 @@
 #include <algorithm>
 #include <chrono>
 
-#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data50.txt"
+#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data500.txt"
 
 class RPQ {
 public:
     RPQ() {
         loadFile();
         SortByR();
+        CMAX();
+        SortByQR();
         CMAX();
     }
 private:
@@ -32,6 +34,12 @@ public:
     
 };
 
+bool QR(const std::vector<int>& vec1, const std::vector<int>& vec2) {
+    return (vec1[2]+vec1[0] < vec2[2]+vec2[0]);
+}
+bool R(const std::vector<int>& vec1, const std::vector<int>& vec2) {
+    return (vec1[0] < vec2[0]);
+}
 //Main Function
 int main() {
     RPQ rpq;
@@ -71,7 +79,7 @@ void RPQ::PrintProcesses() {
 }
 void RPQ::SortByR() {
     auto t1 = std::chrono::high_resolution_clock::now();
-    std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end());
+    std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end(),R);
     auto t2 = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
     std::cout << "Czas Wykonania funkcji sort R: " << duration << "ms" << std::endl;
@@ -113,50 +121,15 @@ void RPQ::SortByQR() {
 }
 void RPQ::SortCarlier(){
     auto t1 = std::chrono::high_resolution_clock::now();
-    std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end(),Carlier);
     auto t2 = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
     std::cout << "Czas Wykonanie algorytmy Carliera: " << duration << "ms" << std::endl;
 }
 void RPQ::SortSchrange() {
     auto t1 = std::chrono::high_resolution_clock::now();
-    std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end(),Schrange);
     auto t2 = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
     std::cout << "Czas Wykonanie Algorytmu Schrange " << duration << "ms" << std::endl;
 
 }
 
-bool Schrange(const std::vector<int>& vec1, const std::vector<int>& vec2) {
-    for (size_t i = 0; i < vec1.size() && i < vec2.size(); i++) {
-        if (vec1[i] > vec2[i]) {
-            return false;
-        }
-        else if (vec1[i] < vec2[i]) {
-            return true;
-        }
-    }
-    return false;
-}
-bool Carlier(const std::vector<int>& vec1, const std::vector<int>& vec2) {
-    for (size_t i = 0; i < vec1.size() && i < vec2.size(); i++) {
-        if (vec1[i] > vec2[i]) {
-            return false;
-        }
-        else if (vec1[i] < vec2[i]) {
-            return true;
-        }
-    }
-    return false;
-}
-bool QR(const std::vector<int>& vec1, const std::vector<int>& vec2) {
-    for (size_t i = 0; i < vec1.size() && i < vec2.size(); i++) {
-        if (vec1[i] > vec2[i]) {
-            return false;
-        }
-        else if (vec1[i] < vec2[i]) {
-            return true;
-        }
-    }
-    return false;
-}
