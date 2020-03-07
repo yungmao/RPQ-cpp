@@ -38,5 +38,8 @@
     <Text Include="..\..\..\Desktop\RPQ\data500.txt">
       <Filter>Pliki zasobów</Filter>
     </Text>
+    <Text Include="Text.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
   </ItemGroup>
 </Project>

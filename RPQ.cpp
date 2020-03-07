@@ -4,19 +4,23 @@
 #include <fstream>
 #include <algorithm>
 #include <chrono>
-
+//#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
 #define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
 
 class RPQ {
-public:
+public:               
     RPQ() {
         loadFile();
         SortByR();
         CMAX();
+        PrintProcesses();
         SortByQR();
         CMAX();
+        PrintProcesses();
         SortSchrange();
         CMAX();
+        PrintProcesses();
+        Order();
     }
 private:
     std::vector<std::vector<int>> VectorOfProcesses;
@@ -33,6 +37,7 @@ public:
     void SortByQR();
     void SortCarlier();
     void SortSchrange();
+    void Order();
     
 };
 
@@ -68,6 +73,7 @@ void RPQ::loadFile() {
                 inputFile >> buffer;
                 Process.push_back(buffer);
             }
+            Process.push_back(j+1);
             VectorOfProcesses.push_back(Process);
         }
     }
@@ -164,4 +170,9 @@ void RPQ::SortSchrange() {
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
     std::cout << "Czas Wykonanie Algorytmu Schrange " << duration << "ms" << std::endl;
 }
-
+void RPQ::Order() {
+    std::cout << "Kolejnosc: " << std::endl;
+    for (std::vector<int> i : VectorOfProcesses) {
+        std::cout << i[numberOfParameters] << " ";
+    }
+}

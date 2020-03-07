@@ -156,6 +156,7 @@
     <Text Include="..\..\..\Desktop\RPQ\data200.txt" />
     <Text Include="..\..\..\Desktop\RPQ\data50.txt" />
     <Text Include="..\..\..\Desktop\RPQ\data500.txt" />
+    <Text Include="Text.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
