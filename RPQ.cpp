@@ -4,13 +4,15 @@
 #include <fstream>
 #include <algorithm>
 #include <chrono>
-#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
-//#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
+
+//#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
+#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
 
 class RPQ {
 public:               
     RPQ() {
         loadFile();
+        CMAX();
         SortByR();
         CMAX();
         PrintProcesses();
@@ -104,8 +106,7 @@ void RPQ::CMAX() {
     int starttime = 0;
     std::vector<int> foo;
     foo = VectorOfProcesses[0];
-    starttime = foo[0] + foo[1];
-    for (int i = 1; i < numberOfProcess; i++) {
+    for (int i = 0; i < numberOfProcess; i++) {
         starttime = cmax;
         foo = VectorOfProcesses[i];
         if (foo[0] <= starttime) {
@@ -132,12 +133,6 @@ void RPQ::SortByQR() {
     auto t2 = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
     std::cout << "Czas Wykonania funkcji sort RQ: " << duration << "ms" << std::endl;
-}
-void RPQ::SortCarlier(){
-    auto t1 = std::chrono::high_resolution_clock::now();
-    auto t2 = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
-    std::cout << "Czas Wykonanie algorytmy Carliera: " << duration << "ms" << std::endl;
 }
 void RPQ::SortSchrange() {
     std::vector<std::vector<int>> Vfoo;
@@ -175,4 +170,10 @@ void RPQ::Order() {
     for (std::vector<int> i : VectorOfProcesses) {
         std::cout << i[numberOfParameters] << " ";
     }
+}
+void RPQ::SortCarlier() {
+    auto t1 = std::chrono::high_resolution_clock::now();
+    auto t2 = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+    std::cout << "Czas Wykonanie algorytmy Carliera: " << duration << "ms" << std::endl;
 }
