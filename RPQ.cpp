@@ -6,7 +6,7 @@
 #include <chrono>
 
 //#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
-#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data20.txt"
+#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
 
 class RPQ {
 public:               
@@ -21,7 +21,13 @@ public:
         CMAX();
         PrintProcesses();
         */
+        
         SortSchrange();
+        CMAX();
+        PrintProcesses();
+        Order();
+       
+        SortSchrangePMTN();
         CMAX();
         PrintProcesses();
         Order();
@@ -32,7 +38,6 @@ private:
     int numberOfProcess = 0;
     int numberOfParameters = 0;
     int buffer;
-
 public:
     void loadFile();
     void PrintProcesses();
@@ -42,7 +47,7 @@ public:
     void SortCarlier();
     void SortSchrange();
     void Order();
-    
+    void SortSchrangePMTN();
 };
 
 bool QR(const std::vector<int>& vec1, const std::vector<int>& vec2) {
@@ -108,11 +113,12 @@ void RPQ::CMAX() {
     int starttime = 0;
     std::vector<int> foo;
     foo = VectorOfProcesses[0];
-    for (int i = 0; i < numberOfProcess; i++) {
+    for (int i = 0; i <VectorOfProcesses.size(); i++) {
+        bool wasAdded = false;
         starttime = cmax;
         foo = VectorOfProcesses[i];
-        if (foo[0] <= starttime) {
-            cmax = starttime + foo[1];
+        if (foo[0] <= starttime) {      
+                cmax = starttime + foo[1];
             if (endtime < (cmax+foo[2])) {
                 endtime = cmax + foo[2];
             }
@@ -120,7 +126,7 @@ void RPQ::CMAX() {
         else
         {
             starttime = starttime + (foo[0] - starttime);
-            cmax = starttime + foo[1];
+                cmax = starttime + foo[1];
             if (endtime < (cmax + foo[2])) {
                 endtime = cmax + foo[2];
             }
@@ -139,7 +145,6 @@ void RPQ::SortByQR() {
 void RPQ::SortSchrange() {
     std::vector<std::vector<int>> Vfoo;
     std::vector<std::vector<int>> VFinal;
-
     std::vector<int> foo;
     std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end(), R);
     foo = VectorOfProcesses[0];
@@ -181,4 +186,50 @@ void RPQ::SortCarlier() {
     auto t2 = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
     std::cout << "Czas Wykonanie algorytmy Carliera: " << duration << "ms" << std::endl;
+}
+void RPQ::SortSchrangePMTN() {
+    std::vector<std::vector<int>> Vfoo;
+    std::vector<std::vector<int>> VFinal;
+    std::vector<int> foo;
+    std::vector<int> exec;
+    std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end(), R);
+    foo = VectorOfProcesses[0];
+    int time = foo[0];
+    int kolejnosc = 0;
+    auto t1 = std::chrono::high_resolution_clock::now();
+    std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end(), ReverseR);
+    do {
+        do {
+            if (VectorOfProcesses.size() != 0) {
+                foo = VectorOfProcesses[VectorOfProcesses.size() - 1];
+                if (foo[0] <= time) {
+                    Vfoo.push_back(foo);
+                    VectorOfProcesses.pop_back();
+                    if (kolejnosc != 0) {
+                        if (foo[2] > exec[2]) {
+                            exec[1] = time - foo[0];
+                            time = foo[0];
+                            if (exec[1] > 0) {
+                                Vfoo.push_back(exec);
+                            }
+                        }
+                    }
+                }
+            }
+            if ((Vfoo.size() == 0)) {
+                time = foo[0];
+            }
+        } while ((VectorOfProcesses.size() > 0) && (foo[0] <= time));
+        std::sort(Vfoo.begin(), Vfoo.end(), Q);
+        foo = Vfoo[Vfoo.size() - 1];
+        time += foo[1];
+        VFinal.push_back(foo);
+        exec = foo;
+        ++kolejnosc;
+        Vfoo.pop_back();
+    } while ((VectorOfProcesses.size() != 0) || (Vfoo.size() != 0));
+    VectorOfProcesses = VFinal;
+    auto t2 = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+    std::cout << "Czas Wykonanie Algorytmu Schrange PMTN: " << duration << "ms" << std::endl;
 }
