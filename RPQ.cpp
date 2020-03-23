@@ -6,7 +6,7 @@
 #include <chrono>
 
 //#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
-#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
+#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data20.txt"
 
 class RPQ {
 public:               
@@ -38,6 +38,7 @@ private:
     int numberOfProcess = 0;
     int numberOfParameters = 0;
     int buffer;
+    std::vector<int> wykonaneProcesy;
 public:
     void loadFile();
     void PrintProcesses();
@@ -112,13 +113,23 @@ void RPQ::CMAX() {
     int cmax = 0;
     int starttime = 0;
     std::vector<int> foo;
+    wykonaneProcesy.clear();
     foo = VectorOfProcesses[0];
     for (int i = 0; i <VectorOfProcesses.size(); i++) {
         bool wasAdded = false;
         starttime = cmax;
         foo = VectorOfProcesses[i];
+        for (int was : wykonaneProcesy) {
+            if (foo[3] == was) wasAdded = true;
+        }
         if (foo[0] <= starttime) {      
+            if (!wasAdded) {
                 cmax = starttime + foo[1];
+            }
+            else {
+                endtime = endtime - foo[1];
+            }
+
             if (endtime < (cmax+foo[2])) {
                 endtime = cmax + foo[2];
             }
@@ -126,11 +137,19 @@ void RPQ::CMAX() {
         else
         {
             starttime = starttime + (foo[0] - starttime);
+
+            if (!wasAdded) {
                 cmax = starttime + foo[1];
+            }
+            else {
+                endtime = endtime - foo[1];
+            }
+
             if (endtime < (cmax + foo[2])) {
                 endtime = cmax + foo[2];
             }
         }
+        wykonaneProcesy.push_back(foo[3]);
     }
 
     std::cout << "Wynik CMAX = " << endtime << std::endl;
