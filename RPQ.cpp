@@ -6,12 +6,13 @@
 #include <chrono>
 
 //#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
-#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
+#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data20.txt"
 
 class RPQ {
 public:               
     RPQ() {
         loadFile();
+       /*
         CMAX();
         SortByR();
         CMAX();
@@ -19,6 +20,7 @@ public:
         SortByQR();
         CMAX();
         PrintProcesses();
+        */
         SortSchrange();
         CMAX();
         PrintProcesses();
@@ -59,7 +61,7 @@ bool ReverseR(const std::vector<int>& vec1, const std::vector<int>& vec2) {
 int main() {
     RPQ rpq;
     //rpq.PrintProcesses();
-    return 0;
+    //return 0;
 }
 
 // Definig methods
@@ -139,19 +141,23 @@ void RPQ::SortSchrange() {
     std::vector<std::vector<int>> VFinal;
 
     std::vector<int> foo;
-    int time = 0;
     int kolejnosc = 0;
+    std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end(), R);
+    foo = VectorOfProcesses[0];
+    int time = foo[0];
     auto t1 = std::chrono::high_resolution_clock::now();
     std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end(), ReverseR);
     do {
         do {
             if (VectorOfProcesses.size() != 0) {
                 foo = VectorOfProcesses[VectorOfProcesses.size() - 1];
-                Vfoo.push_back(foo);
-                VectorOfProcesses.pop_back();
+                if (foo[0] <= time) {
+                    Vfoo.push_back(foo);
+                    VectorOfProcesses.pop_back();
+                }
             }
             if (Vfoo.size() == 1) {
-                time = foo[0];
+                    time = foo[0];
             }
         } while((VectorOfProcesses.size()>0) && (foo[0]<=time));
         std::sort(Vfoo.begin(), Vfoo.end(),Q);
