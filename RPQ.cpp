@@ -141,7 +141,6 @@ void RPQ::SortSchrange() {
     std::vector<std::vector<int>> VFinal;
 
     std::vector<int> foo;
-    int kolejnosc = 0;
     std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end(), R);
     foo = VectorOfProcesses[0];
     int time = foo[0];
@@ -156,7 +155,7 @@ void RPQ::SortSchrange() {
                     VectorOfProcesses.pop_back();
                 }
             }
-            if (Vfoo.size() == 1) {
+            if ((Vfoo.size()==0)) {
                     time = foo[0];
             }
         } while((VectorOfProcesses.size()>0) && (foo[0]<=time));
