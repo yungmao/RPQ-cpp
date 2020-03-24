@@ -5,8 +5,8 @@
 #include <algorithm>
 #include <chrono>
 
-//#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
-#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
+#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
+//#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
 
 class RPQ {
 public:               
@@ -24,12 +24,12 @@ public:
         
         SortSchrange();
        CMAX();
-      PrintProcesses();
+     // PrintProcesses();
        Order();
        
         SortSchrangePMTN();
         CMAX();
-      PrintProcesses();
+      //PrintProcesses();
         Order();
     }
 private:
