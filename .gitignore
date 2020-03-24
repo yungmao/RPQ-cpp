@@ -3,3 +3,15 @@
 ################################################################################
 
 /.vs
+/PQrpq/Debug
+/WithoutQueue/.gitattributes
+/WithoutQueue/CppProperties.json
+/WithoutQueue/.gitignore
+/WithoutQueue/RPQ.sln
+/WithoutQueue/RPQ.vcxproj
+/WithoutQueue/RPQ.vcxproj.filters
+/PQrpq/.vs/PQrpq/v16
+/PQrpq/PQrpq.sln
+/PQrpq/PQrpq.vcxproj
+/PQrpq/PQrpq.vcxproj.filters
+/PQrpq/PQrpq.vcxproj.user

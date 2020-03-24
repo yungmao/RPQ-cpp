@@ -50,12 +50,12 @@ public:
         */
         SortSchrange(MPQOfProcesses);
         CMAX();
-        PrintProcesses();
+       // PrintProcesses();
         Order();
 
         SortSchrangePMTN(MPQOfProcesses);
         CMAX();
-        PrintProcesses();
+        //PrintProcesses();
         Order();
     }
 private:
