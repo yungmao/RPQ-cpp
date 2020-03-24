@@ -5,8 +5,8 @@
 #include <algorithm>
 #include <chrono>
 
-//#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
-#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data20.txt"
+#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
+//#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
 
 class RPQ {
 public:               
@@ -23,13 +23,13 @@ public:
         */
         
         SortSchrange();
-        CMAX();
-        PrintProcesses();
-        Order();
+       CMAX();
+      // PrintProcesses();
+       Order();
        
         SortSchrangePMTN();
         CMAX();
-        PrintProcesses();
+      // PrintProcesses();
         Order();
     }
 private:
@@ -113,43 +113,25 @@ void RPQ::CMAX() {
     int cmax = 0;
     int starttime = 0;
     std::vector<int> foo;
-    wykonaneProcesy.clear();
     foo = VectorOfProcesses[0];
-    for (int i = 0; i <VectorOfProcesses.size(); i++) {
-        bool wasAdded = false;
+    starttime = foo[0] + foo[1];
+    for (int i = 1; i < VectorOfProcesses.size(); i++) {
         starttime = cmax;
         foo = VectorOfProcesses[i];
-        for (int was : wykonaneProcesy) {
-            if (foo[3] == was) wasAdded = true;
-        }
-        if (foo[0] <= starttime) {      
-            if (!wasAdded) {
-                cmax = starttime + foo[1];
-            }
-            else {
-                endtime = endtime - foo[1];
-            }
-
-            if (endtime < (cmax+foo[2])) {
+        if (foo[0] <= starttime) {
+            cmax = starttime + foo[1];
+            if (endtime < (cmax + foo[2])) {
                 endtime = cmax + foo[2];
             }
         }
         else
         {
             starttime = starttime + (foo[0] - starttime);
-
-            if (!wasAdded) {
-                cmax = starttime + foo[1];
-            }
-            else {
-                endtime = endtime - foo[1];
-            }
-
+            cmax = starttime + foo[1];
             if (endtime < (cmax + foo[2])) {
                 endtime = cmax + foo[2];
             }
         }
-        wykonaneProcesy.push_back(foo[3]);
     }
 
     std::cout << "Wynik CMAX = " << endtime << std::endl;
@@ -209,6 +191,7 @@ void RPQ::SortCarlier() {
 void RPQ::SortSchrangePMTN() {
     std::vector<std::vector<int>> Vfoo;
     std::vector<std::vector<int>> VFinal;
+    std::vector<int> NFinished;
     std::vector<int> foo;
     std::vector<int> exec;
     std::sort(VectorOfProcesses.begin(), VectorOfProcesses.end(), R);
@@ -226,8 +209,12 @@ void RPQ::SortSchrangePMTN() {
                     VectorOfProcesses.pop_back();
                     if (kolejnosc != 0) {
                         if (foo[2] > exec[2]) {
+                            NFinished = exec;
                             exec[1] = time - foo[0];
+                            NFinished[1] -= exec[1];
                             time = foo[0];
+                            VFinal.pop_back();
+                            VFinal.push_back(NFinished);
                             if (exec[1] > 0) {
                                 Vfoo.push_back(exec);
                             }
