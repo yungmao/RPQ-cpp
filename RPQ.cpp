@@ -5,8 +5,8 @@
 #include <algorithm>
 #include <chrono>
 
-#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
-//#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
+//#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
+#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
 
 class RPQ {
 public:               
@@ -24,12 +24,12 @@ public:
         
         SortSchrange();
        CMAX();
-      // PrintProcesses();
+      PrintProcesses();
        Order();
        
         SortSchrangePMTN();
         CMAX();
-      // PrintProcesses();
+      PrintProcesses();
         Order();
     }
 private:
@@ -50,7 +50,7 @@ public:
     void Order();
     void SortSchrangePMTN();
 };
-
+//Sorting functions
 bool QR(const std::vector<int>& vec1, const std::vector<int>& vec2) {
     return (vec1[2]+vec1[0] < vec2[2]+vec2[0]);
 }
