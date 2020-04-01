@@ -13,9 +13,6 @@ public:
         loadFile();
         SortSchrange(VectorOfProcesses);
         SortCarlier(VectorOfProcesses);
-        std::cout<<CMAX(VCar);
-        //SortSchrangePMTN(VectorOfProcesses);
-        //CMAX();
     }
 private:
     std::vector<std::vector<int>> VectorOfProcesses;
@@ -42,6 +39,9 @@ public:
     int a;
     int b;
     int c = 0;
+    int r_plim = INT_MAX; // nowe r dla zadania c
+    int p_plim = 0; // suma p KROK 5
+    int q_plim = INT_MAX; // nowe q dla zadania c
     int lastone;
     void znajdza();
     void znajdzb();
@@ -277,12 +277,8 @@ void RPQ::znajdzc() {
     }
 }
 void RPQ::SortCarlier(std::vector<std::vector<int>> VOP) {
-        std::vector<std::vector<int>> K;
         std::vector<int> foo;
         std::vector<int> foo_C;
-        int r_plim = INT_MAX; // nowe r dla zadania c
-        int p_plim = 0; // suma p KROK 5
-        int q_plim = INT_MAX; // nowe q dla zadania c
         auto t1 = std::chrono::high_resolution_clock::now();
         SortSchrange(PSchrange);
         U = CMAX(PSchrange);
@@ -296,6 +292,10 @@ void RPQ::SortCarlier(std::vector<std::vector<int>> VOP) {
         {
             std::cout << "\tNie znaleziono zadania c!!!\n";
             VCar = PSchrange;
+            auto t2 = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+            std::cout << "Czas Wykonanie algorytmy Carliera: " << duration << "ms" << std::endl;
+            std::cout << "CMAX: " << CMAX(VCar);
             return;
         }
         foo_C = PSchrange[c];
@@ -318,6 +318,7 @@ void RPQ::SortCarlier(std::vector<std::vector<int>> VOP) {
         LB = CMAX(PMSchrange);
         if (LB < UB) {
             SortCarlier(VOP);
+            return;
         }
         foo = foo_C;
         PSchrange[c] = foo;
@@ -329,6 +330,7 @@ void RPQ::SortCarlier(std::vector<std::vector<int>> VOP) {
         VCar = PSchrange;
         if (LB < UB) {
             SortCarlier(VOP);
+            return;
         }
         foo = foo_C;
         PSchrange[c] = foo;
@@ -336,5 +338,5 @@ void RPQ::SortCarlier(std::vector<std::vector<int>> VOP) {
         auto t2 = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
         std::cout << "Czas Wykonanie algorytmy Carliera: " << duration << "ms" << std::endl;
-        std::cout << CMAX(VCar) << std::endl;    
+        std::cout << "CMAX: " << CMAX(VCar);
 }
