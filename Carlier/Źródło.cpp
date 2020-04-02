@@ -6,13 +6,34 @@
 #include <chrono>
 
 //#define FILEPATH "C:\\Users\\Student241165\\source\\repos\\RPQ\\Text.txt"
-#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data20.txt"
+#define FILEPATH "C:\\Users\\Student241165\\Desktop\\RPQ\\data10.txt"
 class RPQ {
 public:
     RPQ() {
         loadFile();
+        PrintProcesses();
         SortSchrange(VectorOfProcesses);
         SortCarlier(VectorOfProcesses);
+        std::cout << std::endl;
+        std::cout << "Wartosci Procesow: " << std::endl;
+        for (auto i : VCar) {
+            for (auto j : i) {
+                std::cout << j << ' ';
+            }
+            std::cout << std::endl;
+        }
+        fof();
+        std::cout << CMAX(VCar) << std::endl;
+        std::cout << CMAX(PSchrange) << std::endl;
+        std::cout << CMAX(PMSchrange) << std::endl;
+        std::cout << std::endl;
+        std::cout << "Wartosci Procesow: " << std::endl;
+        for (auto i : PSchrange) {
+            for (auto j : i) {
+                std::cout << j << ' ';
+            }
+            std::cout << std::endl;
+        }
     }
 private:
     std::vector<std::vector<int>> VectorOfProcesses;
@@ -47,6 +68,7 @@ public:
     void znajdzb();
     void znajdzc();
     void kolejnoscwschrange();
+    void fof();
 };
 //Sorting functions
 bool QR(const std::vector<int>& vec1, const std::vector<int>& vec2) {
@@ -147,6 +169,22 @@ void RPQ::kolejnoscwschrange() {
         PSchrange[nr] = i;
         nr++;
     }
+}
+void RPQ::fof()
+{
+    std::vector<std::vector<int>> foo = PSchrange;
+    int kol = 0;
+    for(int k=0;k<PSchrange.size();k++) {
+        std::vector<int> i = PSchrange[k];
+           for(std::vector<int> j:VectorOfProcesses){
+               if (i[3] == j[3]) {
+                   i[0] = j[0];
+                   i[2] = j[2];
+               }
+               foo[k] = i;
+           }
+    }
+    PSchrange = foo;
 }
 void RPQ::SortSchrange(std::vector<std::vector<int>> V) {
     std::vector<std::vector<int>> Vfoo;
@@ -290,7 +328,7 @@ void RPQ::SortCarlier(std::vector<std::vector<int>> VOP) {
         znajdzc();
         if (c == 0)
         {
-            std::cout << "\tNie znaleziono zadania c!!!\n";
+            std::cout << "Nie znaleziono C!" << std::endl;;
             VCar = PSchrange;
             auto t2 = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
@@ -310,30 +348,32 @@ void RPQ::SortCarlier(std::vector<std::vector<int>> VOP) {
             p_plim += foo[1];
         }
         foo = foo_C;
-        if (r_plim > foo_C[0]) {
-            foo[0] = r_plim;
+        if (r_plim+p_plim > foo_C[0]) {
+            foo[0] = r_plim+p_plim;
             PSchrange[c] = foo;
         }
         SortSchrangePMTN(VOP);
         LB = CMAX(PMSchrange);
         if (LB < UB) {
             SortCarlier(VOP);
+            PSchrange[c] = foo_C;
             return;
         }
-        foo = foo_C;
-        PSchrange[c] = foo;
-        if (q_plim > foo_C[2]) {
-            foo[2] = q_plim;
+        //foo = foo_C;
+        PSchrange[c] = foo_C;
+        if (q_plim+p_plim > foo_C[2]) {
+            foo[2] = q_plim+p_plim;
             PSchrange[c] = foo;
         }
         LB = CMAX(PMSchrange);
         VCar = PSchrange;
         if (LB < UB) {
             SortCarlier(VOP);
+            PSchrange[c] = foo_C;
             return;
         }
-        foo = foo_C;
-        PSchrange[c] = foo;
+        //foo = foo_C;
+        PSchrange[c] = foo_C;
         VCar = PSchrange;
         auto t2 = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
